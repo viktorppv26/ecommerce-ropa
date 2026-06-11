@@ -7,17 +7,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useCart } from "@/hooks/use-cart";
 import { useLovedProducts } from "@/hooks/use-loved-products";
+import { ProductType } from "@/types/product";
 
 type InfoProductProps = {
-    product: {
-        id: number;
-        ProductName: string;
-        Description: string;
-        Price: number;
-        Color: string;
-        Gender: string;
-        Size: string;
-    };
+    product: ProductType
 };
 
 const InfoProduct = ({ product }: InfoProductProps) => {

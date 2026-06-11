@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useGetCategoryProduct(slug: string | string[], filterGender: string = "") {
-    const [result, setResult] = useState(null);
+    const [result, setResult] = useState<any[]>([]); // 👈 cambio aquí
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 

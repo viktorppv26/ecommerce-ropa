@@ -13,7 +13,6 @@ export default function Page() {
     const [filterGender, setFilterGender] = useState("");
 
     const { result, loading } = useGetCategoryProduct(categorySlug, filterGender);
-    console.log("PRODUCTOS:", result); // 👈 línea temporal para ver la estructura
 
     return (
         <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -31,7 +30,8 @@ export default function Page() {
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
                     {loading ? (
                         <p>Cargando productos...</p>
-                    ) : Array.isArray(result) && result.length > 0 ? (
+                    ) : // @ts-ignore
+                    Array.isArray(result) && result.length > 0 ? (
                         result.map((product: any) => (
                             <ProductCard key={product.id} product={product} />
                         ))
