@@ -14,6 +14,10 @@ type LovedItemProductProps = {
     product: ProductType
 }
 
+const getImageUrl = (url: string) => {
+    return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`;
+}
+
 const LovedItemProduct = ({ product }: LovedItemProductProps) => {
     const router = useRouter()
     const { removeLovedItem } = useLovedProducts()
@@ -26,19 +30,17 @@ const LovedItemProduct = ({ product }: LovedItemProductProps) => {
 
     return (
         <li className="flex py-6 border-b">
-            {/* Imagen */}
             <div
                 className="cursor-pointer"
                 onClick={() => router.push(`/product/${product.slug}`)}
             >
                 <img
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.Images?.[0]?.url}`}
+                    src={getImageUrl(product.Images?.[0]?.url)}
                     alt="Product"
                     className="w-24 h-24 overflow-hidden rounded-md sm:w-auto sm:h-32"
                 />
             </div>
 
-            {/* Info */}
             <div className="flex justify-between flex-1 px-6">
                 <div>
                     <h2 className="text-lg font-bold">{product.ProductName}</h2>
@@ -49,15 +51,11 @@ const LovedItemProduct = ({ product }: LovedItemProductProps) => {
                         gender={product.Gender}
                     />
 
-                    <Button
-                        className="mt-5 rounded-full"
-                        onClick={addToCheckout}
-                    >
+                    <Button className="mt-5 rounded-full" onClick={addToCheckout}>
                         Añadir al carrito
                     </Button>
                 </div>
 
-                {/* Botón eliminar */}
                 <div>
                     <button
                         className="rounded-full flex items-center justify-center bg-white border p-1"

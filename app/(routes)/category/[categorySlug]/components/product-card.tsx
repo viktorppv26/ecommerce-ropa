@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
 import IconButton from "@/components/icon-button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { formatPrice } from "@/lib/formatPrice";
@@ -26,6 +28,10 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
     const router = useRouter();
 
+    const getImageUrl = (url: string) => {
+        return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`;
+    }
+
     return (
         <Link href={`/product/${product.slug}`}>
             <div className="relative p-2 transition-all duration-100 rounded-lg hover:shadow-md">
@@ -43,7 +49,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                         {product.Images?.map((image) => (
                             <CarouselItem key={image.id}>
                                 <img
-                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${image.url}`}
+                                    src={getImageUrl(image.url)}
                                     alt={product.ProductName}
                                     className="rounded-lg w-full h-48 object-cover"
                                 />

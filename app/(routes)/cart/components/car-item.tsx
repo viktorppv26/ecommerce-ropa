@@ -10,21 +10,23 @@ type CartItemProps = {
     product: ProductType
 }
 
+const getImageUrl = (url: string) => {
+    return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`;
+}
+
 const CartItem = ({ product }: CartItemProps) => {
     const cart = useCart()
 
     return (
         <li className="flex py-6 border-b">
-            {/* Imagen */}
             <div className="relative h-24 w-24 rounded-md overflow-hidden sm:h-32 sm:w-32">
                 <img
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.Images?.[0]?.url}`}
+                    src={getImageUrl(product.Images?.[0]?.url)}
                     alt={product.ProductName}
                     className="w-full h-full object-cover"
                 />
             </div>
 
-            {/* Info */}
             <div className="ml-4 flex flex-1 flex-col justify-between">
                 <div>
                     <h2 className="text-lg font-bold">{product.ProductName}</h2>
@@ -40,7 +42,6 @@ const CartItem = ({ product }: CartItemProps) => {
                 </div>
             </div>
 
-            {/* Botón eliminar */}
             <div>
                 <button
                     className="rounded-full flex items-center justify-center bg-black border p-1"
