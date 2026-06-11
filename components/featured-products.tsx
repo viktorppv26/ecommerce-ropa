@@ -16,10 +16,14 @@ import IconButton from "./icon-button";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/use-cart";
 
+const getImageUrl = (url: string) => {
+    return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`;
+}
+
 const FeaturedProducts = () => {
     const { result, loading }: ResponseType = useGetFeaturedProducts();
     const router = useRouter();
-    const {addItem}= useCart();
+    const { addItem } = useCart();
 
     return (
         <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -35,16 +39,14 @@ const FeaturedProducts = () => {
                                 <Card className="py-4 border border-gray-200 shadow-none">
                                     <CardContent className="relative flex flex-col items-center justify-center p-4">
                                         
-                                        {/* Imagen del producto */}
                                         {product.Images && product.Images.length > 0 && (
                                             <img 
-                                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.Images[0].url}`} 
+                                                src={getImageUrl(product.Images[0].url)}
                                                 alt={product.ProductName} 
                                                 className="w-full h-[200px] object-contain mb-4"
                                             />
                                         )}
 
-                                        {/* Iconos de acción */}
                                         <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100">
                                             <div className="flex justify-center gap-x-6">
                                                 <IconButton 
@@ -60,7 +62,6 @@ const FeaturedProducts = () => {
                                             </div>
                                         </div>
                                         
-                                        {/* Nombre y etiquetas de Talla/Género */}
                                         <div className="flex justify-between gap-4 px-8 mt-4 w-full">
                                             <h3 className="text-lg font-bold">{product.ProductName}</h3>
                                             <div className="flex items-center gap-3">
